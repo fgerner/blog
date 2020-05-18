@@ -5,7 +5,7 @@
     <% for(let i = 0; i < posts.length; i++) { %>
         <div class="post">
             <h1><%= posts[i].title %></h1>
-            <p><%= posts[i].content %></p>
+            <p><%= posts[i].content.substring(0, 100) + '...' %></p>
         </div>
     <% } %>
 </div>
