@@ -22,9 +22,6 @@ const postSchema = {
 
 const Post = mongoose.model("Post", postSchema);
 
-// let posts = [];
-
-
 app.get('/', function (req, res) {
     Post.find({}, function (err, posts) {
         res.render("home", {
@@ -32,10 +29,6 @@ app.get('/', function (req, res) {
             posts: posts
         })
     })
-    // res.render('home', {
-    //     startContent: homeStartingContent,
-    //     posts: posts
-    // });
 })
 
 app.get('/about', function (req, res) {
@@ -60,18 +53,15 @@ app.post('/compose', function (req, res) {
             res.redirect('/');
         }
     });
-
 });
 
-app.get('/posts/:post', function (req, res) {
-    const findPost = _.lowerCase(req.params.post);
-    posts.forEach(function (post) {
-        if (findPost === _.lowerCase(post.title)) {
-            res.render('post', {
-                title: post.title,
-                content: post.content
-            })
-        }
+app.get('/posts/:postId', function (req, res) {
+    const requestedPostId = req.params.postId;
+    Post.findOne({_id: requestedPostId}, function (err, post) {
+        res.render("post", {
+            title: post.title,
+            content: post.content
+        })
     })
 })
 
